@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>##title##</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>    
+    <script src="tools.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+    <div style="position:fixed;top:0px;left:0px;right:0px;padding:10px;background-color:lightgray;font-size:120%;">
+        [<a href="" class="menuitem">about</a>]
+        [<a href="" class="menuitem">verify</a>]
+        [<a href="" class="menuitem">transfer</a>]
+        [<a href="" class="menuitem">create</a>]
+    </div>
+    <div style="margin:0px; padding:20px;margin-top:10px; margin-bottom:220px;">
+        <div>
+            <div id="verify" class="ocultable">
+                <div class="verifydiv" class="input" >
+                    <h2>Verificar @coin</h2>
+                    <div style="background-color:lightblue;padding:20px;">
+                        @coin <input type="text" id="coin" size=50>
+                        <!--id: <input type="text" id="coinid" size=30><br>-->
+                        <button id="do">Verify</button>
+                    </div>
+                    <div style="background-color:lightblue;">
+                        <span style="background-color:lightgray;padding:5px;">Resultado:</span>
+                        <div id="out" style="background-color:lightgray;padding:10px;">
+                        ...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="transfer" class="ocultable">
+                <div class="transferdiv" class="input" >
+                    <h2>Transferir @coin</h2>
+                    <div style="background-color:lightblue;padding:20px;">
+                        @coin origen <input type="text" id="srccoin" size=50><br>
+                        @coin destino <input type="text" id="dstcoin" size=50><br>
+                        <input type="checkbox" id="all"> Transferir todo y destruir el @coin origen<br>
+                        <div id="valuebox">Cantidad <input type="text" id="value" size=20></div><br>
+                        <button id="do">Transfer</button>
+                        <button class="reactivate">Reactivar boton</button>
+                    </div>
+                    <div style="background-color:lightblue;">
+                        <span style="background-color:lightgray;padding:5px;">Resultado:</span>
+                        <div id="out" style="background-color:lightgray;padding:10px;">
+                        ...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="create" class="ocultable">
+                <div class="creatediv" class="input" >
+                    <h2>Crear @coin</h2>
+                    <div style="background-color:lightblue;padding:20px;">
+                        @coin origen <input type="text" id="srccoin" size=50><br>
+                        <input type="checkbox" id="all"> Transferir todo y destruir el @coin origen<br>                        
+                        <div id="valuebox"> Cantidad <input type="text" id="value" size=20></div><br>
+                        <button id="do">Create</button>
+                        <button class="reactivate">Reactivar boton</button>
+                    </div>
+                    <div style="background-color:lightblue;">
+                        <span style="background-color:lightgray;padding:5px;">Resultado:</span>
+                        <div id="out" style="background-color:lightgray;padding:10px;">
+                        ...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            
+
+            <div id="about" class="ocultable">
+                ##info##
+            </div>
+
+        </div>
+    </div>
+    
+    <div style="position:fixed;left:0px;right:0px;bottom:0px;height:200px;background-color:lightgray">
+        <div style="background-color:gray;color:white;">log:</div>
+        <div id="log" style="padding:5px;">
+        </div>
+    </div>
+
+    
+</body>
+
+</html>

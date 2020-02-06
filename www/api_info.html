@@ -1,0 +1,137 @@
+<h1 id="toc_0">Documentacion del API</h1>
+
+<p>Esto es la documentacion del API de la moneda electronica</p>
+
+<p>Las operaciones son las siguientes</p>
+
+<h2 id="toc_1">Informacion general</h2>
+
+<p>Comando info.php</p>
+
+<p><strong>Peticion</strong></p>
+
+<div><pre><code class="language-none">https://@servidor/api/info.php</code></pre></div>
+
+<p><strong>Resultado</strong></p>
+
+<p>Un JSON con informacion sobre la moneda en general</p>
+
+<div><pre><code class="language-none">{
+&quot;version&quot;:&quot;1&quot;,
+&quot;currency_name&quot;:&quot;tlmDolares&quot;,
+&quot;coin_name&quot;:&quot;tlmCoin&quot;,
+&quot;coins_name&quot;:&quot;tlmCoins&quot;,
+&quot;min_coin_value&quot;:0.001,
+&quot;max_coin_value&quot;:1000000
+}</code></pre></div>
+
+<p>Quizas se añadan mas campos en el futuro</p>
+
+<h2 id="toc_2">Validar un coin</h2>
+
+<p>Comando status.php</p>
+
+<p><strong>Peticion</strong></p>
+
+<div><pre><code class="language-none">https://@servidor/api/status.php ? coinid = &lt;id&gt;</code></pre></div>
+
+<p>Opcionalmente se puede indicar también el secreto del coin para verificar. En el caso de que se indique el secreto no se responderá la operación si el secreto no es válido</p>
+
+<div><pre><code class="language-none">https://@servidor/api/status.php ? coinid = &lt;id&gt; &amp; auth= &lt;secreto&gt;
+
+Ejemplos:
+https://@servidor/api/status.php?coinid=2
+https://@servidor/api/status.php?coinid=2&amp;auth=71238173689371</code></pre></div>
+
+<p><strong>Resultado</strong></p>
+
+<p>Un JSON indicando el error o bien el valor del coin</p>
+
+<p>Si existe el coin</p>
+
+<div><pre><code class="language-none">{
+&quot;coinid&quot;:2,
+&quot;value&quot;:1000
+}</code></pre></div>
+
+<p>Si no existe el coin</p>
+
+<div><pre><code class="language-none">{
+&quot;error&quot;:&quot;coin does not exist&quot;
+}
+
+{
+&quot;error&quot;:&quot;coin does not exist or invalid secret&quot;
+}</code></pre></div>
+
+<p>Si hay algun otro error el campo error indicara un texto con el error. La comprobacion puede ser si el campo error existe o no</p>
+
+<h2 id="toc_3">Transferir valor de un coin a otro</h2>
+
+<p>Comando transfer.php</p>
+
+<p><strong>Peticion</strong></p>
+
+<div><pre><code class="language-none">https://@servidor/api/transfer.php? srcid= &lt;id1&gt; &amp; dstid= &lt;id2&gt; &amp; auth= &lt;secreto&gt; &amp; value= &lt;valor&gt;
+&lt;valor&gt; puede ser un numero o all para indicar todo el valor
+
+Ejemplo:
+https://@servidor/api/transfer.php?srcid=17&amp;dstid=43&amp;auth=ahjsbdy1d189db&amp;value=10
+https://@servidor/api/transfer.php?srcid=17&amp;dstid=43&amp;auth=ahjsbdy1d189db&amp;value=all
+transfiere del coin 17 al 43 un valor de 10 o todo el valor</code></pre></div>
+
+<p><strong>Resultado</strong></p>
+
+<p>Si hay un problema con los parametros devuelve un mensaje en el campo error. Si hay un fallo en la transferencia, por ejemplo porque el destino no existe o porque no hay suficiente dinero en el origen devuelve false en el campo ok</p>
+
+<div><pre><code class="language-none">{
+&quot;error&quot;:&quot;missing dstid&quot;
+}
+
+{
+&quot;ok&quot;:false,
+&quot;msg&quot;:&quot;transfer failed&quot;
+}</code></pre></div>
+
+<p>Si la transferencia se realiza correctamente devuelve true en el campo ok y el valor transferido</p>
+
+<div><pre><code class="language-none">{
+&quot;ok&quot;:true,
+&quot;tvalue&quot;:3
+}</code></pre></div>
+
+<h2 id="toc_4">Crear un nuevo coin</h2>
+
+<p>Comando new.php</p>
+
+<p><strong>Peticion</strong></p>
+
+<div><pre><code class="language-none">https://@servidor/api/new.php? srcid= &lt;id1&gt; &amp; auth= &lt;secreto&gt; &amp; value= &lt;valor&gt;
+&lt;valor&gt; puede ser un numero o all para indicar todo el valor
+
+Ejemplo:
+https://@servidor/api/new.php?srcid=23&amp;auth=ahjsbdy1d189db&amp;value=10
+crea un nuevo coin con un valor de 10 extraido del coin 23
+https://@servidor/api/new.php?srcid=23&amp;auth=ahjsbdy1d189db&amp;value=all
+crea un nuevo coin con todo lo que hay en el coin 23 que quedara destruido</code></pre></div>
+
+<p><strong>Resultado</strong></p>
+
+<p>Si hay un error con los parametros devuelve un mensaje de error. O si hay un problema al realizar la transferencia devuelve un codigo numerico en el campo problem y un mensaje de error en el campo msg. Se puede comprobar la presencia de los campos error o problem</p>
+
+<div><pre><code class="language-none">{
+&quot;error&quot;:&quot;missing value&quot;
+}
+
+{
+&quot;problem&quot;:1,
+&quot;msg&quot;:&quot;transfer failed, new coin deleted&quot;
+}</code></pre></div>
+
+<p>Si la creacion es correcta devuelve la informacion del nuevo coin así como el valor que se le ha transferido.</p>
+
+<div><pre><code class="language-none">{
+&quot;id&quot;:&quot;38&quot;,
+&quot;auth&quot;:&quot;8a61144271e7e88a9137&quot;,
+&quot;value&quot;:1
+}</code></pre></div>
